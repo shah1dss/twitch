@@ -1,7 +1,7 @@
 {
-  "singleQuote": true,
-  "trailingComma": "all",
-  "importOrderSeparation": true,
+	"singleQuote": true,
+	"trailingComma": "none",
+	"importOrderSeparation": true,
 	"importOrderSortSpecifiers": true,
 	"importOrderCaseInsensitive": true,
 	"importOrderParserPlugins": [

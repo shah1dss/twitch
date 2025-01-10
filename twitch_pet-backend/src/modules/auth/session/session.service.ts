@@ -11,6 +11,7 @@ import type { Request } from 'express';
 import { PrismaService } from '@/core/prisma/prisma.service';
 
 import { LoginInput } from './inputs/login.input';
+import { getSessionMetadata } from '@/shared/utils/session-metadata.utils';
 
 @Injectable()
 export class SessionService {
@@ -19,7 +20,7 @@ export class SessionService {
     private readonly configService: ConfigService,
   ) {}
 
-  public async login(req: Request, input: LoginInput) {
+  public async login(req: Request, input: LoginInput, userAgent: string) {
     const { login, password } = input;
 
     const user = await this.prismaService.user.findFirst({
@@ -32,6 +33,8 @@ export class SessionService {
       throw new NotFoundException('Пользователь не найден');
     }
 
+    const metadata = getSessionMetadata(req, userAgent);
+
     const isValidPassword = await verify(user.password, password);
 
     if (!isValidPassword) {
@@ -41,7 +44,8 @@ export class SessionService {
     return new Promise((resolve, reject) => {
       req.session.createdAt = new Date();
       req.session.userId = user.id;
-
+      req.session.metadata = metadata;
+      
       req.session.save((err) => {
         if (err) {
           return reject(
@@ -49,7 +53,7 @@ export class SessionService {
           );
         }
 
-        resolve({ user });
+        resolve(user);
       });
     });
   }
