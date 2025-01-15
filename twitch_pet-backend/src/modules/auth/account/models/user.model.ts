@@ -27,6 +27,15 @@ export class UserModel implements User {
   @Field(() => Date)
   public createdAt: Date;
 
+  @Field(() => Boolean)
+  public isEmailVerified: boolean;
+
+  @Field(() => Boolean)
+  public isVerifed: boolean;
+
+  @Field(() => Boolean)
+  public isVerified: boolean;
+
   @Field(() => Date)
   public updatedAt: Date;
 }

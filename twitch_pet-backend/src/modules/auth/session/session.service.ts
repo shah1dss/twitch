@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   ConflictException,
   Injectable,
   InternalServerErrorException,
@@ -12,6 +13,9 @@ import type { Request } from 'express';
 import { PrismaService } from '@/core/prisma/prisma.service';
 import { RedisService } from '@/core/redis/redis.service';
 import { getSessionMetadata } from '@/shared/utils/session-metadata.utils';
+import { destroySession, saveSession } from '@/shared/utils/session.utils';
+
+import { VerificationService } from '../verification/verification.service';
 
 import { LoginInput } from './inputs/login.input';
 
@@ -20,7 +24,8 @@ export class SessionService {
   public constructor(
     private readonly prismaService: PrismaService,
     private readonly redisService: RedisService,
-    private readonly configService: ConfigService
+    private readonly configService: ConfigService,
+    private readonly verificationService: VerificationService
   ) {}
 
   public async findByUser(req: Request) {
@@ -80,45 +85,24 @@ export class SessionService {
       throw new NotFoundException('Пользователь не найден');
     }
 
-    const metadata = getSessionMetadata(req, userAgent);
-
     const isValidPassword = await verify(user.password, password);
 
     if (!isValidPassword) {
       throw new UnauthorizedException('Пароль не верный');
     }
 
-    return new Promise((resolve, reject) => {
-      req.session.createdAt = new Date();
-      req.session.userId = user.id;
-      req.session.metadata = metadata;
+    if (!user.isEmailVerified) {
+      await this.verificationService.sendVerificationToken(user);
+      throw new BadRequestException('Аккаунт не верифицирован, пожалуйста, проверьте свою почту');
+    }
 
-      req.session.save((err) => {
-        if (err) {
-          return reject(
-            new InternalServerErrorException('Не удалось сохранить сессию')
-          );
-        }
+    const metadata = getSessionMetadata(req, userAgent);
 
-        resolve(user);
-      });
-    });
+    return saveSession(req, user, metadata);
   }
 
   public async logout(req: Request) {
-    return new Promise((resolve, reject) => {
-      req.session.destroy((err) => {
-        if (err) {
-          return reject(
-            new InternalServerErrorException('Не завершить сессию')
-          );
-        }
-        req.res.clearCookie(
-          this.configService.getOrThrow<string>('SESSION_NAME')
-        );
-        resolve(true);
-      });
-    });
+    return destroySession(req, this.configService);
   }
 
   public async clearSession(req: Request) {

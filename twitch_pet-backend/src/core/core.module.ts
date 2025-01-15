@@ -5,6 +5,8 @@ import { GraphQLModule } from '@nestjs/graphql';
 
 import { AccountModule } from '@/modules/auth/account/account.module';
 import { SessionModule } from '@/modules/auth/session/session.module';
+import { VerificationModule } from '@/modules/auth/verification/verification.module';
+import { MailModule } from '@/modules/libs/mail/mail.module';
 import { IS_DEV_ENV } from '@/shared/utils/is-dev.util';
 
 import { getGraphQLConfig } from './config/graphql.config';
@@ -15,18 +17,20 @@ import { RedisModule } from './redis/redis.module';
   imports: [
     ConfigModule.forRoot({
       ignoreEnvFile: !IS_DEV_ENV,
-      isGlobal: true,
+      isGlobal: true
     }),
     GraphQLModule.forRootAsync({
       driver: ApolloDriver,
       imports: [ConfigModule],
       useFactory: getGraphQLConfig,
-      inject: [ConfigService],
+      inject: [ConfigService]
     }),
     PrismaModule,
     RedisModule,
     AccountModule,
+    MailModule,
     SessionModule,
-  ],
+    VerificationModule
+  ]
 })
 export class CoreModule {}
