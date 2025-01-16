@@ -1,3 +1,4 @@
+import { HELPFULL_EMAIL } from '@/shared/consts/main.consts'
 import { Body, Head, Heading, Link, Preview, Section, Tailwind, Text } from '@react-email/components'
 import { Html } from '@react-email/html'
 import * as React from 'react'
@@ -21,7 +22,7 @@ export function VerificationTemplate({ domain, token }: VerificationTemplateProp
 							Подтверждение вашей почты
 						</Heading>
 						<Text className='text-base text-black'>
-							Спасибо за регистрацию в twitch_pet! Чтобы подтвердить свой адрес электронной почты, пожалуйста, перейдите по следующей ссылке:
+							Спасибо за регистрацию в {HELPFULL_EMAIL} Чтобы подтвердить свой адрес электронной почты, пожалуйста, перейдите по следующей ссылке:
 						</Text>
 						<Link href={verificationLink} className='inline-flex justify-center items-center rounded-full text-sm font-medium text-white bg-[#18B9AE] px-5 py-2'>
 							Подтвердить почту
@@ -35,7 +36,7 @@ export function VerificationTemplate({ domain, token }: VerificationTemplateProp
 								href="mailto:help@teastream.ru" 
 								className="text-[#18b9ae] underline"
 							>
-								 twitch_pet@buymeacoffee.com
+								{HELPFULL_EMAIL}
 							</Link>.
 						</Text>
 					</Section>

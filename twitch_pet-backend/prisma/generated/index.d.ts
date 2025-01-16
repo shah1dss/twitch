@@ -29,7 +29,8 @@ export type Token = $Result.DefaultSelection<Prisma.$TokenPayload>
  */
 export namespace $Enums {
   export const TokenType: {
-  EMAIL_VERIFY: 'EMAIL_VERIFY'
+  EMAIL_VERIFY: 'EMAIL_VERIFY',
+  PASSWORD_RESET: 'PASSWORD_RESET'
 };
 
 export type TokenType = (typeof TokenType)[keyof typeof TokenType]
@@ -994,6 +995,8 @@ export namespace Prisma {
     bio: string | null
     isVerifed: boolean | null
     isEmailVerified: boolean | null
+    isTotpEnabled: boolean | null
+    totpSecret: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -1008,6 +1011,8 @@ export namespace Prisma {
     bio: string | null
     isVerifed: boolean | null
     isEmailVerified: boolean | null
+    isTotpEnabled: boolean | null
+    totpSecret: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -1022,6 +1027,8 @@ export namespace Prisma {
     bio: number
     isVerifed: number
     isEmailVerified: number
+    isTotpEnabled: number
+    totpSecret: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -1038,6 +1045,8 @@ export namespace Prisma {
     bio?: true
     isVerifed?: true
     isEmailVerified?: true
+    isTotpEnabled?: true
+    totpSecret?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -1052,6 +1061,8 @@ export namespace Prisma {
     bio?: true
     isVerifed?: true
     isEmailVerified?: true
+    isTotpEnabled?: true
+    totpSecret?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -1066,6 +1077,8 @@ export namespace Prisma {
     bio?: true
     isVerifed?: true
     isEmailVerified?: true
+    isTotpEnabled?: true
+    totpSecret?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -1153,6 +1166,8 @@ export namespace Prisma {
     bio: string | null
     isVerifed: boolean
     isEmailVerified: boolean
+    isTotpEnabled: boolean
+    totpSecret: string | null
     createdAt: Date
     updatedAt: Date
     _count: UserCountAggregateOutputType | null
@@ -1184,6 +1199,8 @@ export namespace Prisma {
     bio?: boolean
     isVerifed?: boolean
     isEmailVerified?: boolean
+    isTotpEnabled?: boolean
+    totpSecret?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     tokens?: boolean | User$tokensArgs<ExtArgs>
@@ -1200,6 +1217,8 @@ export namespace Prisma {
     bio?: boolean
     isVerifed?: boolean
     isEmailVerified?: boolean
+    isTotpEnabled?: boolean
+    totpSecret?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["user"]>
@@ -1214,6 +1233,8 @@ export namespace Prisma {
     bio?: boolean
     isVerifed?: boolean
     isEmailVerified?: boolean
+    isTotpEnabled?: boolean
+    totpSecret?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
@@ -1239,6 +1260,8 @@ export namespace Prisma {
       bio: string | null
       isVerifed: boolean
       isEmailVerified: boolean
+      isTotpEnabled: boolean
+      totpSecret: string | null
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["user"]>
@@ -1644,6 +1667,8 @@ export namespace Prisma {
     readonly bio: FieldRef<"User", 'String'>
     readonly isVerifed: FieldRef<"User", 'Boolean'>
     readonly isEmailVerified: FieldRef<"User", 'Boolean'>
+    readonly isTotpEnabled: FieldRef<"User", 'Boolean'>
+    readonly totpSecret: FieldRef<"User", 'String'>
     readonly createdAt: FieldRef<"User", 'DateTime'>
     readonly updatedAt: FieldRef<"User", 'DateTime'>
   }
@@ -2990,6 +3015,8 @@ export namespace Prisma {
     bio: 'bio',
     isVerifed: 'isVerifed',
     isEmailVerified: 'isEmailVerified',
+    isTotpEnabled: 'isTotpEnabled',
+    totpSecret: 'totpSecret',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -3118,6 +3145,8 @@ export namespace Prisma {
     bio?: StringNullableFilter<"User"> | string | null
     isVerifed?: BoolFilter<"User"> | boolean
     isEmailVerified?: BoolFilter<"User"> | boolean
+    isTotpEnabled?: BoolFilter<"User"> | boolean
+    totpSecret?: StringNullableFilter<"User"> | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
     tokens?: TokenListRelationFilter
@@ -3133,6 +3162,8 @@ export namespace Prisma {
     bio?: SortOrderInput | SortOrder
     isVerifed?: SortOrder
     isEmailVerified?: SortOrder
+    isTotpEnabled?: SortOrder
+    totpSecret?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     tokens?: TokenOrderByRelationAggregateInput
@@ -3151,6 +3182,8 @@ export namespace Prisma {
     bio?: StringNullableFilter<"User"> | string | null
     isVerifed?: BoolFilter<"User"> | boolean
     isEmailVerified?: BoolFilter<"User"> | boolean
+    isTotpEnabled?: BoolFilter<"User"> | boolean
+    totpSecret?: StringNullableFilter<"User"> | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
     tokens?: TokenListRelationFilter
@@ -3166,6 +3199,8 @@ export namespace Prisma {
     bio?: SortOrderInput | SortOrder
     isVerifed?: SortOrder
     isEmailVerified?: SortOrder
+    isTotpEnabled?: SortOrder
+    totpSecret?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: UserCountOrderByAggregateInput
@@ -3186,6 +3221,8 @@ export namespace Prisma {
     bio?: StringNullableWithAggregatesFilter<"User"> | string | null
     isVerifed?: BoolWithAggregatesFilter<"User"> | boolean
     isEmailVerified?: BoolWithAggregatesFilter<"User"> | boolean
+    isTotpEnabled?: BoolWithAggregatesFilter<"User"> | boolean
+    totpSecret?: StringNullableWithAggregatesFilter<"User"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
   }
@@ -3265,6 +3302,8 @@ export namespace Prisma {
     bio?: string | null
     isVerifed?: boolean
     isEmailVerified?: boolean
+    isTotpEnabled?: boolean
+    totpSecret?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     tokens?: TokenCreateNestedManyWithoutUserInput
@@ -3280,6 +3319,8 @@ export namespace Prisma {
     bio?: string | null
     isVerifed?: boolean
     isEmailVerified?: boolean
+    isTotpEnabled?: boolean
+    totpSecret?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     tokens?: TokenUncheckedCreateNestedManyWithoutUserInput
@@ -3295,6 +3336,8 @@ export namespace Prisma {
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     isVerifed?: BoolFieldUpdateOperationsInput | boolean
     isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
+    isTotpEnabled?: BoolFieldUpdateOperationsInput | boolean
+    totpSecret?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tokens?: TokenUpdateManyWithoutUserNestedInput
@@ -3310,6 +3353,8 @@ export namespace Prisma {
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     isVerifed?: BoolFieldUpdateOperationsInput | boolean
     isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
+    isTotpEnabled?: BoolFieldUpdateOperationsInput | boolean
+    totpSecret?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tokens?: TokenUncheckedUpdateManyWithoutUserNestedInput
@@ -3325,6 +3370,8 @@ export namespace Prisma {
     bio?: string | null
     isVerifed?: boolean
     isEmailVerified?: boolean
+    isTotpEnabled?: boolean
+    totpSecret?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -3339,6 +3386,8 @@ export namespace Prisma {
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     isVerifed?: BoolFieldUpdateOperationsInput | boolean
     isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
+    isTotpEnabled?: BoolFieldUpdateOperationsInput | boolean
+    totpSecret?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -3353,6 +3402,8 @@ export namespace Prisma {
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     isVerifed?: BoolFieldUpdateOperationsInput | boolean
     isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
+    isTotpEnabled?: BoolFieldUpdateOperationsInput | boolean
+    totpSecret?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -3497,6 +3548,8 @@ export namespace Prisma {
     bio?: SortOrder
     isVerifed?: SortOrder
     isEmailVerified?: SortOrder
+    isTotpEnabled?: SortOrder
+    totpSecret?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -3511,6 +3564,8 @@ export namespace Prisma {
     bio?: SortOrder
     isVerifed?: SortOrder
     isEmailVerified?: SortOrder
+    isTotpEnabled?: SortOrder
+    totpSecret?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -3525,6 +3580,8 @@ export namespace Prisma {
     bio?: SortOrder
     isVerifed?: SortOrder
     isEmailVerified?: SortOrder
+    isTotpEnabled?: SortOrder
+    totpSecret?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -3923,6 +3980,8 @@ export namespace Prisma {
     bio?: string | null
     isVerifed?: boolean
     isEmailVerified?: boolean
+    isTotpEnabled?: boolean
+    totpSecret?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -3937,6 +3996,8 @@ export namespace Prisma {
     bio?: string | null
     isVerifed?: boolean
     isEmailVerified?: boolean
+    isTotpEnabled?: boolean
+    totpSecret?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -3967,6 +4028,8 @@ export namespace Prisma {
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     isVerifed?: BoolFieldUpdateOperationsInput | boolean
     isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
+    isTotpEnabled?: BoolFieldUpdateOperationsInput | boolean
+    totpSecret?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -3981,6 +4044,8 @@ export namespace Prisma {
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     isVerifed?: BoolFieldUpdateOperationsInput | boolean
     isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
+    isTotpEnabled?: BoolFieldUpdateOperationsInput | boolean
+    totpSecret?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

@@ -18,6 +18,8 @@ import { destroySession, saveSession } from '@/shared/utils/session.utils';
 import { VerificationService } from '../verification/verification.service';
 
 import { LoginInput } from './inputs/login.input';
+import { TOTP } from 'otpauth';
+import { PROJECT_NAME } from '@/shared/consts/main.consts';
 
 @Injectable()
 export class SessionService {
@@ -73,7 +75,7 @@ export class SessionService {
   }
 
   public async login(req: Request, input: LoginInput, userAgent: string) {
-    const { login, password } = input;
+    const { login, password, pin } = input;
 
     const user = await this.prismaService.user.findFirst({
       where: {
@@ -94,6 +96,28 @@ export class SessionService {
     if (!user.isEmailVerified) {
       await this.verificationService.sendVerificationToken(user);
       throw new BadRequestException('Аккаунт не верифицирован, пожалуйста, проверьте свою почту');
+    }
+
+    if(user.isTotpEnabled) {
+      if(!pin) {
+        return {
+          message: 'Необходим код для завершения авторизации'
+        }  
+      }
+      const totp = new TOTP({
+        issuer: PROJECT_NAME,
+        label: `${user.email}`,
+        algorithm: 'SHA1',
+        digits: 6,
+        period: 30,
+        secret: user.totpSecret
+      });
+
+      const delta = totp.validate({ token: pin });
+
+      if (delta !== 0) {
+        throw new BadRequestException('Неверный код');
+      }
     }
 
     const metadata = getSessionMetadata(req, userAgent);

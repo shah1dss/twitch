@@ -20,7 +20,8 @@ model User {
   tokens Token[]
   isVerifed Boolean @default(false) @map("is_verified")
   isEmailVerified Boolean @default(false) @map("is_email_verified")
-
+  isTotpEnabled Boolean @default(false) @map("is_totp_enabled")
+  totpSecret String? @map("totp_secret")
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
@@ -46,6 +47,7 @@ model Token {
 
 enum TokenType {
   EMAIL_VERIFY
+  PASSWORD_RESET
 
   @@map("token_types")
 }

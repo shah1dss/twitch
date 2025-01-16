@@ -24,6 +24,12 @@ export class UserModel implements User {
   @Field(() => String, { nullable: true })
   public bio: string;
 
+  @Field(() => Boolean)
+  public isTotpEnabled: boolean;
+
+  @Field(() => String, { nullable: true })
+  public totpSecret: string;
+
   @Field(() => Date)
   public createdAt: Date;
 
